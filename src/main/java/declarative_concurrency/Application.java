@@ -22,7 +22,7 @@ public class Application implements CommandLineRunner {
   private final static List<String> CWIDS = asList("1", "2", "3", "4", "5", "6", "7", "8", "9");
   private static final Consumer<Either<String, User>> PRINT_RESULT = maybeUser -> log.info("result = {}", maybeUser);
 
-  private final UserService userService;
+  private final List<UserService> userServices;
 
   public static void main(String[] args) {
     SpringApplication.run(Application.class, args);
@@ -30,40 +30,10 @@ public class Application implements CommandLineRunner {
 
   @Override
   public void run(String... strings) throws Exception {
-    log.info("#######################");
-    log.info("# loadUsersSequential #");
-    log.info("#######################");
-
-    userService.loadUsersSequential(CWIDS).forEach(PRINT_RESULT);
-
-    log.info("###########################");
-    log.info("# loadUsersParallelStream #");
-    log.info("###########################");
-
-    userService.loadUsersParallelStream(CWIDS).forEach(PRINT_RESULT);
-
-    log.info("#########################");
-    log.info("# loadUsersForkJoinPool #");
-    log.info("#########################");
-
-    userService.loadUsersForkJoinPool(CWIDS).forEach(PRINT_RESULT);
-
-    log.info("############################");
-    log.info("# loadUsersExecutorService #");
-    log.info("############################");
-
-    userService.loadUsersExecutorService(CWIDS).forEach(PRINT_RESULT);
-
-    log.info("##############################");
-    log.info("# loadUsersCompletableFuture #");
-    log.info("##############################");
-
-    userService.loadUsersCompletableFuture(CWIDS).forEach(PRINT_RESULT);
-
-    log.info("#################");
-    log.info("# loadUsersFlux #");
-    log.info("#################");
-
-    userService.loadUsersFlux(CWIDS).forEach(PRINT_RESULT);
+    userServices.forEach(userService -> {
+      log.info("Starting to execute {}", userService.getClass().getCanonicalName());
+      userService.loadUsers(CWIDS).forEach(PRINT_RESULT);
+      log.info("Finished to execute {}", userService.getClass().getCanonicalName());
+    });
   }
 }
