@@ -1,4 +1,4 @@
-package declarative_concurrency.user;
+package declarative_concurrency.part_i;
 
 import javaslang.control.Either;
 import lombok.RequiredArgsConstructor;
@@ -6,8 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.concurrent.ForkJoinPool;
-import java.util.concurrent.Future;
 
 import static java.util.stream.Collectors.toList;
 import static javaslang.control.Either.left;
@@ -17,32 +15,19 @@ import static javaslang.control.Either.right;
 @Component
 @RequiredArgsConstructor
 @SuppressWarnings("Duplicates")
-public class UserService3 implements UserService {
+public class UserService1 implements UserService {
 
   private final UserClient userClient;
 
   @Override
   public List<Either<String, User>> loadUsers(List<String> cwids) {
-    ForkJoinPool forkJoinPool = new ForkJoinPool(10);
-
-    log.info("Starting to schedule fetching users");
-    Future<List<Either<String, User>>> eventualUsers = forkJoinPool.submit(() -> cwids.parallelStream()
+    log.info("Starting to fetch users");
+    List<Either<String, User>> maybeUsers = cwids.stream()
       .map(this::fetchUserAsEither)
-      .collect(toList())
-    );
-    log.info("Finished to schedule fetching users");
+      .collect(toList());
+    log.info("Finished to fetch users");
 
-    log.info("Waiting for fetching users to complete");
-    try {
-      List<Either<String, User>> maybeUsers = eventualUsers.get();
-
-      log.info("Fetching users completed");
-      return maybeUsers;
-    } catch (Exception error) {
-      log.info("An error occurred while waiting for fetching users to complete", error);
-
-      throw new RuntimeException(error);
-    }
+    return maybeUsers;
   }
 
   private Either<String, User> fetchUserAsEither(String cwid) {

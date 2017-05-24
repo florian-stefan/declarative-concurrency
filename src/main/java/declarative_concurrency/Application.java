@@ -1,7 +1,7 @@
 package declarative_concurrency;
 
-import declarative_concurrency.user.User;
-import declarative_concurrency.user.UserService;
+import declarative_concurrency.part_i.User;
+import declarative_concurrency.part_i.UserService;
 import javaslang.control.Either;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +19,7 @@ import static java.util.Arrays.asList;
 @RequiredArgsConstructor
 public class Application implements CommandLineRunner {
 
-  private final static List<String> CWIDS = asList("1", "2", "3", "4", "5", "6", "7", "8", "9");
+  private static final List<String> CWIDS = asList("1", "2", "3", "4", "5", "6", "7", "8", "9");
   private static final Consumer<Either<String, User>> PRINT_RESULT = maybeUser -> log.info("result = {}", maybeUser);
 
   private final List<UserService> userServices;
@@ -36,4 +36,5 @@ public class Application implements CommandLineRunner {
       log.info("Finished to execute {}", userService.getClass().getCanonicalName());
     });
   }
+
 }

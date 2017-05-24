@@ -1,19 +1,14 @@
-package declarative_concurrency.user;
+package declarative_concurrency.part_i;
 
-import javaslang.Tuple;
-import javaslang.Tuple2;
 import javaslang.control.Either;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.Future;
 
-import static java.util.concurrent.Executors.newFixedThreadPool;
-import static java.util.concurrent.TimeUnit.SECONDS;
 import static java.util.stream.Collectors.toList;
 import static javaslang.control.Either.left;
 import static javaslang.control.Either.right;
@@ -22,43 +17,39 @@ import static javaslang.control.Either.right;
 @Component
 @RequiredArgsConstructor
 @SuppressWarnings("Duplicates")
-public class UserService4 implements UserService {
+public class UserService3 implements UserService {
 
   private final UserClient userClient;
 
   @Override
   public List<Either<String, User>> loadUsers(List<String> cwids) {
-    ExecutorService executorService = newFixedThreadPool(10);
+    ForkJoinPool forkJoinPool = new ForkJoinPool(10);
 
     log.info("Starting to schedule fetching users");
-    List<Tuple2<String, Future<User>>> eventualUsers = cwids.stream()
-      .map(cwid -> {
-        Future<User> eventualUser = executorService.submit(() -> fetchUser(cwid));
-
-        return Tuple.of(cwid, eventualUser);
-      })
-      .collect(toList());
+    Future<List<Either<String, User>>> eventualUsers = forkJoinPool.submit(() -> cwids.parallelStream()
+      .map(this::fetchUserAsEither)
+      .collect(toList())
+    );
     log.info("Finished to schedule fetching users");
 
     log.info("Waiting for fetching users to complete");
-    List<Either<String, User>> maybeUsers = eventualUsers.stream()
-      .map(cwidAndEventualUser -> {
-        String cwid = cwidAndEventualUser._1;
-        Future<User> eventualUser = cwidAndEventualUser._2;
+    try {
+      List<Either<String, User>> maybeUsers = eventualUsers.get();
 
-        return getUserAsEither(cwid, () -> eventualUser.get(2, SECONDS));
-      })
-      .collect(toList());
-    log.info("Fetching users completed");
+      log.info("Fetching users completed");
+      return maybeUsers;
+    } catch (Exception error) {
+      log.info("An error occurred while waiting for fetching users to complete", error);
 
-    return maybeUsers;
+      throw new RuntimeException(error);
+    }
   }
 
-  private Either<String, User> getUserAsEither(String cwid, Callable<User> eventualUser) {
+  private Either<String, User> fetchUserAsEither(String cwid) {
     Either<String, User> maybeUser;
 
     try {
-      maybeUser = right(eventualUser.call());
+      maybeUser = right(fetchUser(cwid));
     } catch (Exception error) {
       log.error("An error occurred while fetching user with cwid = {}", cwid);
 

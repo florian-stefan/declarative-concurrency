@@ -1,4 +1,4 @@
-package declarative_concurrency.user;
+package declarative_concurrency.part_i;
 
 
 import lombok.extern.slf4j.Slf4j;
