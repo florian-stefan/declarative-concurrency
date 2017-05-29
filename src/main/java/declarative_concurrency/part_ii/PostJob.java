@@ -11,7 +11,6 @@ import reactor.core.scheduler.Schedulers;
 import java.util.List;
 import java.util.function.Function;
 
-import static java.util.function.Function.identity;
 import static java.util.stream.Stream.generate;
 
 @Slf4j
@@ -27,7 +26,6 @@ public class PostJob {
   public void run() {
     List<Tuple2<Long, String>> keyWords = Flux
       .fromStream(generate(new PostChunkSupplier(postRepository)))
-      .flatMap(identity())
       .takeWhile(posts -> posts.size() > 0)
       .concatMap(this::processNextChunk)
       .take(AMOUNT_OF_REQUIRED_POSTS_WITH_KEYWORDS)
