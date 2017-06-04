@@ -1,4 +1,4 @@
-package declarative_concurrency.part_2;
+package declarative_concurrency.part_2a;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
