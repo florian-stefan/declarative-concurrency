@@ -1,4 +1,4 @@
-package declarative_concurrency.part_ii;
+package declarative_concurrency.part_2;
 
 import javaslang.Tuple;
 import javaslang.Tuple2;
@@ -36,6 +36,8 @@ public class PostJob {
   }
 
   private Flux<Tuple2<Long, String>> processNextChunk(List<Post> posts) {
+    // flatMap vs concatMap vs flatMapSequential
+    // concatMapDelayError
     return Flux
       .fromIterable(posts)
       .flatMap(post -> postService.detectKeyWords(post)

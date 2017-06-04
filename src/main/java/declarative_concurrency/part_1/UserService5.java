@@ -1,4 +1,4 @@
-package declarative_concurrency.part_i;
+package declarative_concurrency.part_1;
 
 import javaslang.control.Either;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,7 @@
 package declarative_concurrency;
 
-import declarative_concurrency.part_i.User;
-import declarative_concurrency.part_i.UserService;
+import declarative_concurrency.part_1.User;
+import declarative_concurrency.part_1.UserService;
 import javaslang.control.Either;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
