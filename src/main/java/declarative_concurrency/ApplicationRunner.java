@@ -1,6 +1,6 @@
 package declarative_concurrency;
 
-import declarative_concurrency.part_2b.TwitterClient;
+import declarative_concurrency.part_3.TwitterClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
