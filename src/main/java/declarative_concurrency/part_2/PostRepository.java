@@ -1,4 +1,4 @@
-package declarative_concurrency.part_2a;
+package declarative_concurrency.part_2;
 
 import org.springframework.stereotype.Component;
 

@@ -1,4 +1,4 @@
-package declarative_concurrency.part_2b;
+package declarative_concurrency.part_3;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

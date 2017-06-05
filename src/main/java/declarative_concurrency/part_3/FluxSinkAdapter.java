@@ -1,4 +1,4 @@
-package declarative_concurrency.part_2b;
+package declarative_concurrency.part_3;
 
 import lombok.extern.slf4j.Slf4j;
 import org.asynchttpclient.*;
