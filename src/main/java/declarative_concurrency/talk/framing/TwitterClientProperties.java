@@ -1,4 +1,4 @@
-package declarative_concurrency.part_3;
+package declarative_concurrency.talk.framing;
 
 import lombok.Getter;
 import lombok.Setter;

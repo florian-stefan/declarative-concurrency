@@ -1,5 +1,6 @@
-package declarative_concurrency.part_3;
+package declarative_concurrency.talk;
 
+import declarative_concurrency.talk.framing.FramingService;
 import org.junit.Before;
 import org.junit.Test;
 import reactor.core.publisher.Flux;

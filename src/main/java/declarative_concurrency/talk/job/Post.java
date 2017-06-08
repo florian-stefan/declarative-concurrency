@@ -1,4 +1,4 @@
-package declarative_concurrency.part_2;
+package declarative_concurrency.talk.job;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

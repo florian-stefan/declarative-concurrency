@@ -1,4 +1,4 @@
-package declarative_concurrency.part_1;
+package declarative_concurrency.talk;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;

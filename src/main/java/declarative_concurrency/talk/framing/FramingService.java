@@ -1,4 +1,4 @@
-package declarative_concurrency.part_3;
+package declarative_concurrency.talk.framing;
 
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;

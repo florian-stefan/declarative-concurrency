@@ -1,4 +1,4 @@
-package declarative_concurrency.part_3;
+package declarative_concurrency.talk.framing;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

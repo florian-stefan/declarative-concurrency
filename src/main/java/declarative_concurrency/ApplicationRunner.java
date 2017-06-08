@@ -1,6 +1,6 @@
 package declarative_concurrency;
 
-import declarative_concurrency.part_3.TwitterClient;
+import declarative_concurrency.talk.framing.TwitterClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -19,7 +19,6 @@ public class ApplicationRunner implements CommandLineRunner {
       tweet -> log.info("Received tweet: {}", tweet),
       error -> log.error("An error occurred.", error)
     );
-
   }
 
 }
