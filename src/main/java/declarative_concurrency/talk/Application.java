@@ -1,4 +1,4 @@
-package declarative_concurrency;
+package declarative_concurrency.talk;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.SpringApplication;
