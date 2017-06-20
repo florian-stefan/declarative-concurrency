@@ -1,4 +1,4 @@
-package declarative_concurrency.blog;
+package declarative_concurrency;
 
 import javaslang.Tuple;
 import javaslang.Tuple2;

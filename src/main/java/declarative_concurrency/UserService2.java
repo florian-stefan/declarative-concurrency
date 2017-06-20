@@ -1,4 +1,4 @@
-package declarative_concurrency.blog;
+package declarative_concurrency;
 
 import javaslang.control.Either;
 import lombok.RequiredArgsConstructor;
@@ -15,14 +15,14 @@ import static javaslang.control.Either.right;
 @Component
 @RequiredArgsConstructor
 @SuppressWarnings("Duplicates")
-public class UserService1 implements UserService {
+public class UserService2 implements UserService {
 
   private final UserClient userClient;
 
   @Override
   public List<Either<String, User>> loadUsers(List<String> cwids) {
     log.info("Starting to fetch users");
-    List<Either<String, User>> maybeUsers = cwids.stream()
+    List<Either<String, User>> maybeUsers = cwids.parallelStream()
       .map(this::fetchUserAsEither)
       .collect(toList());
     log.info("Finished to fetch users");
