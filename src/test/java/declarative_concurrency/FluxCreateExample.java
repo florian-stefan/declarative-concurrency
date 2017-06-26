@@ -8,6 +8,7 @@ import reactor.test.StepVerifier;
 
 import java.time.Duration;
 import java.util.Iterator;
+import java.util.List;
 import java.util.function.Supplier;
 
 import static java.util.Arrays.asList;
@@ -69,10 +70,15 @@ public class FluxCreateExample {
 
   @Test
   public void shouldCreateFluxFromIterable() {
-    Flux<Integer> flux = fromIterable(asList(1, 2, 3, 4, 5));
+    List<String> cwids = asList("1", "2", "3", "4", "5", "6");
+
+    Flux<String> flux = fromIterable(cwids).take(5);
 
     StepVerifier.create(flux)
-      .expectNext(1, 2, 3, 4, 5)
+      .expectSubscription()
+      .expectNext(cwids.get(0))
+      .expectNext(cwids.get(1))
+      .expectNext(cwids.get(2), cwids.get(3), cwids.get(4))
       .expectComplete()
       .verify();
   }

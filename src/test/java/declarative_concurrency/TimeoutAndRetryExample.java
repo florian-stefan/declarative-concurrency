@@ -133,7 +133,8 @@ public class TimeoutAndRetryExample {
   }
 
   private Duration withExponentialBackoff(int index) {
-    return ofMillis((long) Math.pow(10, index));
+    long millis = (long) Math.pow(10, index);
+    return ofMillis(millis);
   }
 
   private User loadUser(String cwid) {
